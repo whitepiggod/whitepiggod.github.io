@@ -1,6 +1,6 @@
 :root {
   --color-background: #fff;
-  --color-background-secondary: #3b2e7e;
+  --color-background-secondary: #f6f8fa;
   --color-background-rgb: 255, 255, 255;
   --color-text: #33333d;
   --color-text-secondary: #4e4e4e;
@@ -15,26 +15,26 @@
     --color-mode: 'dark';
   }
   :root:not([color-mode]) {
-    --color-background: #1e2128;
-    --color-background-secondary: #1a1d22;
+    --color-background: #2e4e7e;
+    --color-background-secondary: #a1afc9;
     --color-background-rgb: 30, 33, 40;
-    --color-text: #ddd;
-    --color-text-secondary: #9899ab;
-    --color-text-third: #7d8594;
-    --color-border: #2b3038;
+    --color-text: #fff;
+    --color-text-secondary: #a1afc9;
+    --color-text-third: #a1afc9;
+    --color-border: #a1afc9;
     --background-image: url("/images/theme/welcome-image.jpg");
     --loading-image: url("/images/theme/loading.gif");
     --lazyload-image: url("/images/theme/loading.gif");
   }
 }
 [color-mode='dark'] {
-  --color-background: #1e2128;
-  --color-background-secondary: #1a1d22;
+  --color-background: #2e4e7e;
+  --color-background-secondary: #a1afc9;
   --color-background-rgb: 30, 33, 40;
-  --color-text: #ddd;
-  --color-text-secondary: #9899ab;
-  --color-text-third: #7d8594;
-  --color-border: #2b3038;
+  --color-text: #fff;
+  --color-text-secondary: #a1afc9;
+  --color-text-third: #a1afc9;
+  --color-border: #a1afc9;
   --background-image: url("/images/theme/welcome-image.jpg");
   --loading-image: url("/images/theme/loading.gif");
   --lazyload-image: url("/images/theme/loading.gif");
@@ -62,7 +62,7 @@
 }
 body {
   margin: 0;
-  font-size: 14px;
+  font-size: 15px;
   color: var(--color-text);
   font-family: Hiragino Sans GB;
   background-color: var(--color-background);
@@ -74,7 +74,7 @@ body a {
   text-decoration: none;
 }
 body a:hover {
-  color: #ff3b00;
+  color: #3b2e7e;
 }
 body a,
 body a:hover {
@@ -134,15 +134,15 @@ body input {
   outline: none;
 }
 *::selection {
-  background: #ff3b00;
+  background: #3b2e7e;
   color: #fff;
 }
 *::-moz-selection {
-  background: #ff3b00;
+  background: #3b2e7e;
   color: #fff;
 }
 *::-webkit-selection {
-  background: #ff3b00;
+  background: #3b2e7e;
   color: #fff;
 }
 .container {
@@ -862,7 +862,7 @@ body input {
 }
 @media (hover: hover) and (pointer: fine) {
   .fab:hover {
-    background-color: #ff3b00;
+    background-color: #3b2e7e;
     cursor: pointer;
   }
 }
@@ -1371,7 +1371,7 @@ body input {
   text-align: justify;
 }
 .search .search-container .search-output .search-result-list .search-result .search-keyword {
-  color: #ff3b00;
+  color: #3b2e7e;
   font-style: normal;
 }
 .search .search-container .search-close {
@@ -1594,7 +1594,7 @@ body input {
   background-color: var(--color-background-secondary);
   padding: 2px 5px;
   border-radius: 2px;
-  color: #ff3b00;
+  color: #3b2e7e;
 }
 .article .wrap .main .content a {
   text-decoration: underline;
@@ -1660,7 +1660,7 @@ body input {
   margin: 0 0 1em;
   padding: 15px 20px;
   background-color: var(--color-background-secondary);
-  border-left: 4px solid #ff3b00;
+  border-left: 4px solid #3b2e7e;
 }
 .article .wrap .main .content blockquote p {
   margin: 0;
@@ -1669,7 +1669,7 @@ body input {
   margin-top: 50px;
 }
 .article .wrap .main .extra .copyright {
-  border-left: 4px solid #ff3b00;
+  border-left: 4px solid #3b2e7e;
   background-color: var(--color-background-secondary);
   list-style: none;
   padding: 15px 20px;
@@ -1754,7 +1754,7 @@ body input {
 }
 .article .wrap .main .extra .tag-list .tag-list-item:hover {
   cursor: pointer;
-  background-color: #ff3b00;
+  background-color: #3b2e7e;
 }
 .article .wrap .main .extra .tag-list .tag-list-item:hover a {
   color: #fff;
@@ -1777,7 +1777,7 @@ body input {
   text-align: center;
 }
 .article .wrap .main .comments .btn:hover {
-  background-color: #ff3b00;
+  background-color: #3b2e7e;
   color: #fff;
   transition: all 0.3s cubic-bezier(0.25, 0.5, 0.5, 0.9);
   cursor: pointer;
@@ -1874,7 +1874,7 @@ body input {
   border-left: 3px solid transparent;
 }
 .toc-wrap .toc .toc-link.active {
-  color: #ff3b00;
+  color: #3b2e7e;
   font-weight: bold;
 }
 .toc-wrap .toc .toc-child {
@@ -1984,7 +1984,7 @@ body input {
   margin-right: 10px;
 }
 .tags a:hover {
-  background-color: #ff3b00;
+  background-color: #3b2e7e;
   color: #fff !important;
 }
 .galleries {
