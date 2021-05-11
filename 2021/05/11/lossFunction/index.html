@@ -1,0 +1,430 @@
+
+
+<!DOCTYPE html>
+<html lang="en" color-mode=light>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>用于分割的语义损失函数综述 - 白色的猪</title>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="google" content="notranslate" />
+  <meta name="keywords" content=", blog">
+  <meta name="description" content="[TOC]
+原文：A survey of loss f...">
+  <meta name="author" content="whitepiggod">
+  <link rel="icon" href="/images/icons/favicon-16x16.png" type="image/png" sizes="16x16">
+  <link rel="icon" href="/images/icons/favicon-32x32.png" type="image/png" sizes="32x32">
+  <link rel="apple-touch-icon" href="/images/icons/apple-touch-icon.png" sizes="180x180">
+  <meta rel="mask-icon" href="/images/icons/icon-512.png" color="#333333">
+  
+    <meta rel="msapplication-TileImage" content="/images/icons/icon-128x128.png">
+    <meta rel="msapplication-TileColor" content="#000000">
+  
+
+  
+<link rel="stylesheet" href="/css/style.css">
+
+
+  
+    
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1445822_r673sha78lq.css">
+
+  
+
+  
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.css">
+
+  
+
+  
+    
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/xcode.min.css" name="highlight-style" mode="light">
+
+      
+        
+        
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.18.1/styles/solarized-dark.min.css" name="highlight-style" mode="dark">
+
+      
+  
+
+  <script>
+    var CONFIG = window.CONFIG || {};
+    var ZHAOO = window.ZHAOO || {};
+    CONFIG = {
+      isHome: false,
+      fancybox: true,
+      pjax: false,
+      lazyload: {
+        enable: true,
+        only_post: 'false',
+        loading: '[object Object]'
+      },
+      donate: {
+        enable: false,
+        alipay: 'https://pic.izhaoo.com/alipay.jpg',
+        wechat: 'https://pic.izhaoo.com/wechat.jpg'
+      },
+      galleries: {
+        enable: true
+      },
+      fab: {
+        enable: true,
+        always_show: false
+      },
+      carrier: {
+        enable: true
+      },
+      daovoice: {
+        enable: false
+      },
+      preview: {
+        background: {
+          default: '',
+          api: ''
+        },
+        motto: {
+          default: '生活，总是给人以重新开始的机会～～',
+          typing: true,
+          api: '',
+          data_contents: '["data","content"]'
+        },
+      },
+      qrcode: {
+        enable: true,
+        type: 'url',
+        image: '',
+      },
+      toc: {
+        enable: true
+      },
+      scrollbar: {
+        type: 'default'
+      },
+      notification: {
+        enable: false,
+        delay: 4500,
+        list: '',
+        page_white_list: '',
+        page_black_list: ''
+      },
+      search: {
+        enable: false,
+        path: ''
+      }
+    }
+  </script>
+
+  
+
+  
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="lock-screen">
+  <div class="loading"></div>
+  
+    
+
+
+  <nav class="navbar">
+    <div class="left">
+      
+        <i class="iconfont iconhome j-navbar-back-home"></i>
+      
+      
+        <i class="iconfont iconqrcode j-navbar-qrcode"></i>
+      
+      
+        <i class="iconfont iconmoono" id="color-toggle" color-toggle="light"></i>
+      
+      
+    </div>
+    <div class="center">用于分割的语义损失函数综述</div>
+    <div class="right">
+      <i class="iconfont iconmenu j-navbar-menu"></i>
+    </div>
+    
+      <div id="qrcode-navbar"></div>
+    
+  </nav>
+
+  
+  
+
+<nav class="menu">
+  <div class="menu-container">
+    <div class="menu-close">
+      <i class="iconfont iconbaseline-close-px"></i>
+    </div>
+    <ul class="menu-content"><li class="menu-item">
+        <a href="/ " class="underline "> 首页</a>
+      </li><li class="menu-item">
+        <a href="/galleries/ " class="underline "> 摄影</a>
+      </li><li class="menu-item">
+        <a href="/archives/ " class="underline "> 归档</a>
+      </li><li class="menu-item">
+        <a href="/tags/ " class="underline "> 标签</a>
+      </li><li class="menu-item">
+        <a href="/categories/ " class="underline "> 分类</a>
+      </li><li class="menu-item">
+        <a href="/about/ " class="underline "> 作者留言板</a>
+      </li></ul>
+    
+      <div class="menu-copyright"><p>博客出之一位努力奋斗的｜白色的 🐷</p></div>
+    
+  </div>
+</nav>
+  <main id="main">
+  <div class="article-wrap">
+    <div class="row container">
+      <div class="col-xl-3"></div>
+      <div class="col-xl-6"><article class="article">
+  <div class="wrap">
+    <section class="head">
+  <img   class="lazyload" data-original="/images/theme/2.jpg" src="data:image/gif;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVQImWNgYGBgAAAABQABh6FO1AAAAABJRU5ErkJggg=="  draggable="false">
+  <div class="head-mask">
+    <h1 class="head-title">用于分割的语义损失函数综述</h1>
+    <div class="head-info">
+      <span class="post-info-item"><i class="iconfont iconcalendar"></i>May 11, 2021</span>
+      
+      <span class="post-info-item"><i class="iconfont iconfont-size"></i>2596</span>
+    </div>
+  </div>
+</section>
+    <section class="main">
+      <section class="content">
+        <p>[TOC]</p>
+<p>原文：A survey of loss functions for semantic segmentation</p>
+<hr>
+<p>出版社：IEEE</p>
+<p>出版时间：2020</p>
+<hr>
+<p>本文总结了15种基于分割的损失函数。并将他们分成4类：</p>
+<ul>
+<li>基于分布：Distribution-based<ul>
+<li>二元交叉熵：Binary Cross-Entropy</li>
+<li>加权交叉熵：Weighted Cross-Entropy</li>
+<li>平衡交叉熵：Balanced Cross-Entropy</li>
+<li>焦点损失：Focal Loss</li>
+<li>距离图导出的损失惩罚项：Distance map derived loss penalty term</li>
+</ul>
+</li>
+<li>基于区域：Regionbased<ul>
+<li>Dice Loss</li>
+<li>Sensitivity-Specificity Loss</li>
+<li>Tversky Loss</li>
+<li>Focal Tversky Loss</li>
+<li>Log-Cosh Dice Loss(ours)：作者所提出的损失函数</li>
+</ul>
+</li>
+<li>基于边界：Boundary-based<ul>
+<li>Hausdorff Distance loss</li>
+<li>Shape aware loss</li>
+</ul>
+</li>
+<li>复合：Compouned<ul>
+<li>Combo Loss</li>
+<li>Exponential Logarithmic Loss</li>
+</ul>
+</li>
+</ul>
+<h1 id="Binary-Cross-Entropy二元交叉熵"><a href="#Binary-Cross-Entropy二元交叉熵" class="headerlink" title="Binary Cross-Entropy二元交叉熵"></a>Binary Cross-Entropy二元交叉熵</h1><p>交叉熵是对给定随机变量或一组事件的两个概率分布之间的差异的度量。它广泛应用于分类目标，分割是像素级分类，因此效果良好。</p>
+<p>交叉熵是信息论中的一个重要概念，主要用于度量两个概率分布间的差异性。<strong>信息量的大小与信息发生的概率成反比</strong>。概率越大，信息量越小。概率越小，信息量越大。</p>
+<p>信息熵也被称为熵，用来表示所有信息量的期望。期望是试验中每次可能结果的概率乘以其结果的总和。</p>
+<p>交叉熵的损失函数单独评估每个像素矢量的类预测，然后对所有像素求平均值，所以我们可以认为图像中的像素被平等的学习了。但是，医学图像中常出现类别不均衡（class imbalance）的问题，由此导致训练会被像素较多的类主导，对于较小的物体很难学习到其特征，从而降低网络的有效性。</p>
+<p>最好的使用场景是不同的类别间有均匀分布的数据，是基于伯努利分布的损失函数。</p>
+<h1 id="Weighted-Binary-Cross-Entropy加权二元交叉熵"><a href="#Weighted-Binary-Cross-Entropy加权二元交叉熵" class="headerlink" title="Weighted Binary Cross-Entropy加权二元交叉熵"></a>Weighted Binary Cross-Entropy加权二元交叉熵</h1><p>加权二元交叉熵（WCE）是二元交叉熵变量的一个变种。在这个例子中，正的例子被一些系数加权。它广泛用于倾斜数据的情况。</p>
+<p>加入的权值用于调整假阴性和假阳性。如果你想减少假阴性的数量就设置权值大于1，同样地，如果想要减少假阳性的数量就设置权值小于1.权值是用于正例的系数。</p>
+<p>应用场景：广泛应用于偏斜数据集，通过系数来衡量</p>
+<h1 id="Balanced-Cross-Entropy平衡交叉熵"><a href="#Balanced-Cross-Entropy平衡交叉熵" class="headerlink" title="Balanced Cross-Entropy平衡交叉熵"></a>Balanced Cross-Entropy平衡交叉熵</h1><p>平衡交叉熵（BCE）类似于加权交叉熵。唯一的区别是，除了正例子，我们还对负示例进行了加权。</p>
+<p>应用场景：与加权交叉熵类似，广泛应用于倾斜数据集，它分别对正样本和负样本进行加权。</p>
+<h1 id="Focal-Loss焦点损失"><a href="#Focal-Loss焦点损失" class="headerlink" title="Focal Loss焦点损失"></a>Focal Loss焦点损失</h1><p>焦损（FL）也可以看作二元交叉熵的变化。它降低了简单示例的贡献，并使模型能够更加关注学习难用的示例。它适用于高度不平衡的类场景。</p>
+<p>焦点损失提出去减少权重来减轻模型并且使用一个调制系数来聚焦训练难负例。当一个样本被分错的时候，调制系数就趋于1，也就是说相比原来的loss是没有什么大的改变。当分类正确而且是易分类样本，调制系数趋于0，也就是对总的loss贡献很小。</p>
+<p>应用场景：对于高度不平衡的数据集最有效地降低了简单示例的贡献，使模型能够学习难的示例。</p>
+<h1 id="Distance-map-derived-loss-penalty-term：距离图得出的损失惩罚项"><a href="#Distance-map-derived-loss-penalty-term：距离图得出的损失惩罚项" class="headerlink" title="Distance map derived loss penalty term：距离图得出的损失惩罚项"></a>Distance map derived loss penalty term：距离图得出的损失惩罚项</h1><p>应用场景：用于难以分割边界的交叉熵变量</p>
+<h1 id="Dice-Loss"><a href="#Dice-Loss" class="headerlink" title="Dice Loss"></a>Dice Loss</h1><p>Dice系数是计算机视觉界广泛使用的度量方法，用于计算两幅图像之间的相似性。</p>
+<p>应用场景：灵感来自骰子系数，一种评估分割结果的指标。由于骰子系数本质上是非凸的，所以对其进行了修改，使其更易于处理</p>
+<h1 id="Sensitivity-Specificity-Loss"><a href="#Sensitivity-Specificity-Loss" class="headerlink" title="Sensitivity-Specificity Loss"></a>Sensitivity-Specificity Loss</h1><p>受敏感度和特异性指标的启发，用于更关注真实阳性的病例。通过添加一个w系数增加敏感度的比重从而更加关注真阳性的病例</p>
+<h1 id="Tversky-Loss"><a href="#Tversky-Loss" class="headerlink" title="Tversky Loss"></a>Tversky Loss</h1><p>Tversky指数（TI）也可以看作是骰子系数的推广。它通过系数的作用，将一个权重添加到FP（假阳性）和FN（假负）。</p>
+<p>应用场景：骰子系数的变种增加了假阳性和假阴性的权重。</p>
+<h1 id="Focal-Tversky-Loss"><a href="#Focal-Tversky-Loss" class="headerlink" title="Focal Tversky Loss"></a>Focal Tversky Loss</h1><p>与Focal Loss类似</p>
+<p>应用场景：Tversky的变体，集中在难例上</p>
+<h1 id="Sensitivity-Specificity"><a href="#Sensitivity-Specificity" class="headerlink" title="Sensitivity Specificity"></a>Sensitivity Specificity</h1><p>与Dice系数相似，灵敏度和特异性是评价分割预测的常用指标。在这个损失函数中，我们可以用参数来解决类不平衡问题。</p>
+<h1 id="Shape-aware-Loss形状感知损失"><a href="#Shape-aware-Loss形状感知损失" class="headerlink" title="Shape-aware Loss形状感知损失"></a>Shape-aware Loss形状感知损失</h1><p>形状感知损失[14]顾名思义，考虑到形状。一般情况下，所有损失函数都在像素级工作，但是形状感知损失计算预测分割曲线周围点与地面真实度的点到曲线的平均欧氏距离，并将其作为交叉熵损失函数的系数。</p>
+<p>在边界难以分割的情况下，通过增加基于形状的系数来改变交叉熵损失。</p>
+<h1 id="Combo-Loss组合损失"><a href="#Combo-Loss组合损失" class="headerlink" title="Combo Loss组合损失"></a>Combo Loss组合损失</h1><p>组合损失是Dice损失和改进的交叉熵的加权和。它试图利用类不平衡的骰子损失的灵活性，同时利用交叉熵进行曲线平滑。</p>
+<h1 id="Exponential-Logarithmic-Loss指数对数损失"><a href="#Exponential-Logarithmic-Loss指数对数损失" class="headerlink" title="Exponential Logarithmic Loss指数对数损失"></a>Exponential Logarithmic Loss指数对数损失</h1><p>指数对数损失函数集中于使用骰子损失和交叉熵损失的组合公式预测精度较低的结构。Wong等人。[16] 提出对骰子损失和交叉熵损失进行指数和对数变换，以结合更精细的决策边界和精确的数据分布的优点。</p>
+<p>应用场景：骰子损失和二进制交叉熵的组合函数集中在预测精度较低的情况。</p>
+<h1 id="Hausdorff-Distance-Loss-Hausdorff距离损失"><a href="#Hausdorff-Distance-Loss-Hausdorff距离损失" class="headerlink" title="Hausdorff Distance Loss Hausdorff距离损失"></a>Hausdorff Distance Loss Hausdorff距离损失</h1><p>受Hausdorff距离度量用于评估分割损失的启发，通过添加一些变量来处理距离度量的非凸性</p>
+<h1 id="Correlation-Maximized-Structural-Similarity-Loss相关最大化结构相似性损失"><a href="#Correlation-Maximized-Structural-Similarity-Loss相关最大化结构相似性损失" class="headerlink" title="Correlation Maximized Structural Similarity Loss相关最大化结构相似性损失"></a>Correlation Maximized Structural Similarity Loss相关最大化结构相似性损失</h1><p>应用场景：重点是分割结构。用于结构重要的情况，如医学图像。</p>
+<h1 id="Log-Cosh-Dice-Loss对数DIce损失"><a href="#Log-Cosh-Dice-Loss对数DIce损失" class="headerlink" title="Log-Cosh Dice Loss对数DIce损失"></a>Log-Cosh Dice Loss对数DIce损失</h1><p>相当于是对DIce系数的改进，由于Dice的非凸性，所以可能无法获得最优结果。</p>
+<p>应用场景：</p>
+
+      </section>
+      <section class="extra">
+        
+          <ul class="copyright">
+  
+    <li><strong>本文作者：</strong>whitepiggod</li>
+    <li><strong>本文链接：</strong><a href="https://whitepiggod.github.io/2021/05/11/lossFunction/index.html" title="https:&#x2F;&#x2F;whitepiggod.github.io&#x2F;2021&#x2F;05&#x2F;11&#x2F;lossFunction&#x2F;index.html">https:&#x2F;&#x2F;whitepiggod.github.io&#x2F;2021&#x2F;05&#x2F;11&#x2F;lossFunction&#x2F;index.html</a></li>
+    <li><strong>版权声明：</strong>本博客所有文章均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" title="BY-NC-SA" target="_blank" rel="noopener">BY-NC-SA</a> 许可协议，转载请注明出处！</li>
+  
+</ul>
+        
+        
+        
+  <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/deep-learning/" rel="tag">deep learning</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/loss/" rel="tag">loss</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/segmentation/" rel="tag">segmentation</a></li></ul> 
+
+        
+  <nav class="nav">
+    <a href="/2021/05/11/sortAlgorithm/"><i class="iconfont iconleft"></i>排序算法的总结</a>
+    <a></a>
+  </nav>
+
+      </section>
+      
+    </section>
+  </div>
+</article></div>
+      <div class="col-xl-3">
+        
+          
+  <aside class="toc-wrap">
+    <h3 class="toc-title">文章目录：</h3>
+    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Binary-Cross-Entropy%E4%BA%8C%E5%85%83%E4%BA%A4%E5%8F%89%E7%86%B5"><span class="toc-text">Binary Cross-Entropy二元交叉熵</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Weighted-Binary-Cross-Entropy%E5%8A%A0%E6%9D%83%E4%BA%8C%E5%85%83%E4%BA%A4%E5%8F%89%E7%86%B5"><span class="toc-text">Weighted Binary Cross-Entropy加权二元交叉熵</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Balanced-Cross-Entropy%E5%B9%B3%E8%A1%A1%E4%BA%A4%E5%8F%89%E7%86%B5"><span class="toc-text">Balanced Cross-Entropy平衡交叉熵</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Focal-Loss%E7%84%A6%E7%82%B9%E6%8D%9F%E5%A4%B1"><span class="toc-text">Focal Loss焦点损失</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Distance-map-derived-loss-penalty-term%EF%BC%9A%E8%B7%9D%E7%A6%BB%E5%9B%BE%E5%BE%97%E5%87%BA%E7%9A%84%E6%8D%9F%E5%A4%B1%E6%83%A9%E7%BD%9A%E9%A1%B9"><span class="toc-text">Distance map derived loss penalty term：距离图得出的损失惩罚项</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Dice-Loss"><span class="toc-text">Dice Loss</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Sensitivity-Specificity-Loss"><span class="toc-text">Sensitivity-Specificity Loss</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Tversky-Loss"><span class="toc-text">Tversky Loss</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Focal-Tversky-Loss"><span class="toc-text">Focal Tversky Loss</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Sensitivity-Specificity"><span class="toc-text">Sensitivity Specificity</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Shape-aware-Loss%E5%BD%A2%E7%8A%B6%E6%84%9F%E7%9F%A5%E6%8D%9F%E5%A4%B1"><span class="toc-text">Shape-aware Loss形状感知损失</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Combo-Loss%E7%BB%84%E5%90%88%E6%8D%9F%E5%A4%B1"><span class="toc-text">Combo Loss组合损失</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Exponential-Logarithmic-Loss%E6%8C%87%E6%95%B0%E5%AF%B9%E6%95%B0%E6%8D%9F%E5%A4%B1"><span class="toc-text">Exponential Logarithmic Loss指数对数损失</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Hausdorff-Distance-Loss-Hausdorff%E8%B7%9D%E7%A6%BB%E6%8D%9F%E5%A4%B1"><span class="toc-text">Hausdorff Distance Loss Hausdorff距离损失</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Correlation-Maximized-Structural-Similarity-Loss%E7%9B%B8%E5%85%B3%E6%9C%80%E5%A4%A7%E5%8C%96%E7%BB%93%E6%9E%84%E7%9B%B8%E4%BC%BC%E6%80%A7%E6%8D%9F%E5%A4%B1"><span class="toc-text">Correlation Maximized Structural Similarity Loss相关最大化结构相似性损失</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Log-Cosh-Dice-Loss%E5%AF%B9%E6%95%B0DIce%E6%8D%9F%E5%A4%B1"><span class="toc-text">Log-Cosh Dice Loss对数DIce损失</span></a></li></ol>
+  </aside>
+
+        
+      </div>
+    </div>
+  </div>
+</main>
+  
+
+<footer class="footer">
+  <div class="footer-social"><a 
+        href="tencent://message/?Menu=yes&uin=673244093 "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#12B7F5'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconQQ "></i>
+      </a><a 
+        href="javascript:; "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#09BB07'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconwechat-fill "></i>
+      </a><a 
+        href="https://www.instagram.com/izhaoo/ "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#DA2E76'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconinstagram "></i>
+      </a><a 
+        href="https://github.com/whitepiggod "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color= '#9f7be1'" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  icongithub-fill "></i>
+      </a><a 
+        href="mailto:aaa64483999@163.com "
+        target="_blank"
+        class="footer-social-item"
+        onMouseOver="this.style.color=#3b2e7e" 
+        onMouseOut="this.style.color='#33333D'">
+          <i class="iconfont  iconmail"></i>
+      </a></div>
+  
+    <div class="footer-copyright"><p>博客出之一位努力奋斗的｜白色的 🐷</p></div>
+  
+</footer>
+  
+      <div class="fab fab-plus">
+    <i class="iconfont iconplus"></i>
+  </div>
+  
+  
+  <div class="fab fab-up">
+    <i class="iconfont iconcaret-up"></i>
+  </div>
+  
+  
+  
+    
+<script src="/js/color-mode.js"></script>
+
+  
+  
+</body>
+
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.lazyload/1.9.1/jquery.lazyload.min.js"></script>
+
+
+
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.7/jquery.fancybox.min.js"></script>
+
+
+
+
+
+
+  
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+
+
+
+
+<script src="/js/utils.js"></script>
+<script src="/js/script.js"></script>
+
+
+
+
+
+
+
+  <script>
+    (function () {
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+      } else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+      }
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+</html>
